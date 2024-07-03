@@ -306,16 +306,26 @@ void top_up (){
         string amount;
         cout << "\n-----Top-up Account-----\n";
         cout << "Enter the amount to top up (leave blank to cancel transcation): ";
-        cin >> amount;
+        getline(cin >> ws, amount); //allow blank input
 
-        if (amount == "" || amount == " ") {
-            cout << "\n--------------------------------------------------------"<< endl;
-            cout << "                TRANSACTION CANCELLED"<< endl;
-            cout << "--------------------------------------------------------\n"<< endl;
-            return; 
+        if (amount_str.empty()) {
+            std::cout << "\n--------------------------------------------------------" << std::endl;
+            std::cout << "                TRANSACTION CANCELLED" << std::endl;
+            std::cout << "--------------------------------------------------------\n" << std::endl;
+            return;
+
         }
         else {
-            amount
+            float amount = stof(amount);
+            if (amount > 0){
+               user_accounts[username].user_bal += amount; 
+                cout << "\n------------------------------------------------------" << endl;
+                cout << "      Top-up successful. New balance: ${user_accounts[username]['Balance']}" << endl;
+                cout << "------------------------------------------------------\n"<< endl;
+            } else {
+                cout << " \nInvalid amount. Please enter a positive value.\n" << endl;
+                return;
+            }
         }
     } catch (const invalid_argument& e) {
         cout << "\n***************************" << endl;
